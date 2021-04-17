@@ -5,10 +5,11 @@ import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferInt;
+import java.util.concurrent.TimeUnit;
 
 import javax.swing.JFrame;
 
-import com.game.catchyname.entity.mob.Player;
+//import com.game.catchyname.entity.mob.Player;
 import com.game.catchyname.graphics.Screen;
 import com.game.catchyname.input.Keyboard;
 import com.game.cathyname.level.Level;
@@ -41,11 +42,17 @@ public class Game extends Canvas implements Runnable{
 	private Keyboard key;
 	private Level level;
 	private Player player;
+	private Champion champion;
+	
 	//private Menu menu;
 	private long score;
 	
+	private GameDataList alldata;
 	
 	public Game() {
+		alldata = new GameDataList();
+		player = new Player();
+		alldata.newPlayerData(player);
 		Dimension size = new Dimension(width * scale, height * scale); //Resolution
 		setPreferredSize(size);
 //		System.out.println("The dimension of the game is" + size+ " and the height is" + height);
@@ -56,8 +63,9 @@ public class Game extends Canvas implements Runnable{
 		level = Level.spawn;
 		
 		TileCoordinate playerSpawn = new TileCoordinate(19,50);	//spawning position of player
-		player = new Player(playerSpawn.getX(),playerSpawn.getY(),key);	// drawing player in the given position
-		player.init(level);
+		player.setChampion(playerSpawn.getX(),playerSpawn.getY(),key);	// drawing player in the given position
+		champion = player.getChampion();
+		champion.init(level);
 		
 		addKeyListener(key);
 	}
@@ -76,7 +84,6 @@ public class Game extends Canvas implements Runnable{
 			e.printStackTrace();
 		}
 	}
-
 	
 	public void run() {
 		long timer = System.currentTimeMillis();
@@ -113,7 +120,7 @@ public class Game extends Canvas implements Runnable{
 	
 	public void update() {
 		key.update();
-		player.update();
+		champion.update();
 	}
 	
 	
@@ -124,11 +131,11 @@ public class Game extends Canvas implements Runnable{
 			return;
 		}
 		screen.clear();
-		int xScroll = player.x - screen.width /2;
-		int yScroll = player.y - screen.height /2;
+		int xScroll = champion.x - screen.width /2;
+		int yScroll = champion.y - screen.height /2;
 		//using xScroll and yScroll to render g amount of tiles right, left, bottom, and up of the player who is located in the middle of the screen
 		level.render(xScroll,yScroll, screen);
-		player.render(screen);
+		champion.render(screen);
 		
 		
 		//Copying the array of the Screen class to + yOffset the array
