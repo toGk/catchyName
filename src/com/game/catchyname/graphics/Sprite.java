@@ -1,7 +1,13 @@
 package com.game.catchyname.graphics;
 
-public class Sprite {
+import java.io.Serializable;
 
+public class Sprite {//implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	public final int SIZE;
 	private int x,y;
 	public int[] pixels;

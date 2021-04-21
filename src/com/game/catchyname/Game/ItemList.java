@@ -13,5 +13,9 @@ public class ItemList implements Serializable{
 	public ItemList() {
 		items = new ArrayList<Item>();
 	}
+	
+	public ArrayList<Item> getItems(){
+		return items;
+	}
 
 }

@@ -7,18 +7,27 @@ import com.game.catchyname.graphics.Screen;
 import com.game.catchyname.graphics.Sprite;
 import com.game.cathyname.level.Level;
 
-public class Mob implements Serializable{
+public abstract class Mob implements Serializable{
 	
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 
-	public Mob() {
-		
+	public Mob(Coordinates spawn) {
+		this.spawn = spawn;
+		x = spawn.getX();
+		y = spawn.getY();
 	}
 	
-	public int x,y;
+	protected Coordinates spawn;
+	protected int hp = 10;
+	protected int attack = 2;
+	public void damage(int attack) {
+		hp-=attack;
+	}
+	
+	private int x,y;
 	private boolean removed = false;
 	protected Level level;
 	protected final Random random = new Random();
@@ -59,8 +68,8 @@ public class Mob implements Serializable{
 		
 		// -1 , 0 ,1 
 		if(!collision(xa,ya)) {
-			x+= xa;
-			y+= ya;
+			x = getX() + xa;
+			y = getY() + ya;
 		}
 		
 	}
@@ -77,8 +86,8 @@ public class Mob implements Serializable{
 			// and +1 in height
 			//checking 4 neighboring tiles if any of them or more are solid.If so doesn't allow moving toward them
 			//	%2 and /2 because 4 corners in a tile, *10 how big is the hitbox, +-B(BUFFER)
-			int xt = ((x + xa) + c % 2 *10 - 16 +2)/16;	//  how wide is the horizontal hitbox
-			int yt = ((y + ya) + c / 2 * 14  -16 +1)/16;	//	how big vertically is the hitbox
+			int xt = ((getX() + xa) + c % 2 *10 - 16 +2)/16;	//  how wide is the horizontal hitbox
+			int yt = ((getY() + ya) + c / 2 * 14  -16 +1)/16;	//	how big vertically is the hitbox
 			if(level.getTile(xt,yt).solid()) solid =true;
 		}
 		return solid;
@@ -87,6 +96,14 @@ public class Mob implements Serializable{
 	
 	public void render() {
 		
+	}
+
+	public int getX() {
+		return x;
+	}
+
+	public int getY() {
+		return y;
 	}
 
 }

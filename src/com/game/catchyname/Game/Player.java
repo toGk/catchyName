@@ -2,7 +2,6 @@ package com.game.catchyname.Game;
 
 import java.io.Serializable;
 
-import com.game.catchyname.input.Keyboard;
 
 public class Player implements Serializable{
 	/**
@@ -10,18 +9,19 @@ public class Player implements Serializable{
 	 */
 	private static final long serialVersionUID = 1L;
 	private Champion champion;
+	private String name;
 	
-	public Player() {
-		//champion = new Champion();
-	}
-
-	public void setChampion(int x, int y, Keyboard key) {
-		champion = new Champion(x,y,key);
-		
+	public Player(String name,Champion champion) {
+		this.champion = champion;
+		this.name = name;
 	}
 
 	public Champion getChampion() {
 		return champion;
+	}
+	
+	public String getName() {
+		return name;
 	}
 
 }

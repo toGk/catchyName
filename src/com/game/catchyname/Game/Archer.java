@@ -2,6 +2,10 @@ package com.game.catchyname.Game;
 
 public class Archer extends Champion{
 
+	public Archer(Coordinates playerSpawn) {
+		super(playerSpawn);
+	}
+
 	/**
 	 * 
 	 */

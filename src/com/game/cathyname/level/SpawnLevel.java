@@ -2,12 +2,13 @@ package com.game.cathyname.level;
 
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.io.Serializable;
 
 import javax.imageio.ImageIO;
 
 import com.game.catchyname.level.tile.SpawnLevel.Tile;
 
-public class SpawnLevel extends Level{
+public class SpawnLevel extends Level implements Serializable{
 
 	public SpawnLevel(String path) {
 		super(path);

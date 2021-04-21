@@ -1,6 +1,7 @@
 package com.game.catchyname.Game;
 
 import com.game.catchyname.graphics.Screen;
+import com.game.catchyname.level.tile.SpawnLevel.Tile;
 
 public class NPC extends Mob{
 	/**
@@ -9,9 +10,12 @@ public class NPC extends Mob{
 	private static final long serialVersionUID = 1L;
 	private Item loot;
 	
-	public NPC(int x, int y) {
-		this.x = x;
-		this.y = y;
+	public NPC(Coordinates spawn) {
+		super(spawn);
+	}
+	
+	public Item getItem() {
+		return loot;
 	}
 	
 	public void update() {
@@ -19,9 +23,10 @@ public class NPC extends Mob{
 	}
 	
 	public void render(Screen screen) {
-		int xx = x-16;
-		int yy = y-16;
-		screen.renderPlayer(xx, yy, sprite);
+		int xx = getX()-16;
+		int yy = getY()-16;
+		//screen.renderPlayer(xx, yy, Sprite.spawnBlood);
+		screen.renderTile(xx, yy, Tile.spawnBlood);
 	}
 
 }

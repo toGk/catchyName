@@ -8,22 +8,23 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.HashMap;
 
-public class GameDataList implements Serializable{
+public final class GameDataList implements Serializable{
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private HashMap<Player,GameData> alldata;
+	private HashMap<String,GameData> data;
 	
 	public GameDataList() {
-		alldata = new HashMap<Player,GameData>();
+		data = new HashMap<String,GameData>();
 	}
 	
-	public void newPlayerData(Player player) {
-		alldata.put(player, new GameData());
+	public GameData getData(String name) {
+		return data.get(name);
 	}
 	
-	public void saveGame() {
+	public synchronized void saveGame(GameData data) {
+		this.data.put(data.getPlayer().getName(), data);
 		try {
 			FileOutputStream fileOut = new FileOutputStream("game.ser");
 			ObjectOutputStream out = new ObjectOutputStream(fileOut);	
@@ -36,11 +37,11 @@ public class GameDataList implements Serializable{
 		
 	}
 	
-	public static GameDataList loadGame() {
+	public synchronized static GameDataList loadGame() {
 		try {
 			FileInputStream fileIn = new FileInputStream("game.ser");
-			ObjectInputStream in = new ObjectInputStream(fileIn);	
-			GameDataList data = (GameDataList) in.readObject();
+			ObjectInputStream in = new ObjectInputStream(fileIn);
+			GameDataList data = (GameDataList)in.readObject();
 		    in.close();
 		    fileIn.close();
 		    return data;

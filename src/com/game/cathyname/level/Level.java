@@ -1,10 +1,12 @@
 package com.game.cathyname.level;
 
+import java.io.Serializable;
+
 import com.game.catchyname.graphics.Screen;
 import com.game.catchyname.graphics.Sprite;
 import com.game.catchyname.level.tile.SpawnLevel.Tile;
 
-public class Level {
+public class Level implements Serializable{
 	// Because will have only 1 level loaded at a time I am gonna make a global variable level
 	protected int width,height;
 	protected int[] tilesInt; 											// to know in witch index I am gonna create a tile
