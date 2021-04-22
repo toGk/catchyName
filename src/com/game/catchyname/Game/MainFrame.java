@@ -18,20 +18,29 @@ public class MainFrame extends JFrame{
 	private JPanel panel;
 	private JButton newGame;
 	private JButton loadGame;
+	private JButton clearAllData;
+	private GameDataList datalist;
 	
 	public MainFrame() {
+		datalist = GameDataList.loadGame();
+		if(datalist==null) {
+			datalist = new GameDataList();
+		}
 	    panel= new JPanel();
 	    newGame = new JButton("New Game");
 	    loadGame = new JButton("Load Game");
+	    clearAllData = new JButton("Clear All Data");
 	    
 	    
 	    panel.add(newGame);
 	    panel.add(loadGame);
+	    panel.add(clearAllData);
 	    
 		
 		ButtonListener btnListener = new ButtonListener();
 		newGame.addActionListener(btnListener);
 		loadGame.addActionListener(btnListener);
+		clearAllData.addActionListener(btnListener);
 		
 		this.getContentPane().add(panel);
 		
@@ -45,9 +54,9 @@ public class MainFrame extends JFrame{
 class ButtonListener implements ActionListener{
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		GameDataList datalist = GameDataList.loadGame();
-		if(datalist==null) {
+		if(e.getSource().equals(clearAllData)) {
 			datalist = new GameDataList();
+			datalist.saveGame();
 		}
 		if(e.getSource().equals(newGame)) {
 			new NewGameFrame(datalist);

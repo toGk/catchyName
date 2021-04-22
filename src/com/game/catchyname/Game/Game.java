@@ -130,7 +130,7 @@ public final class Game extends Canvas implements Runnable{
 	}
 	
 	public void save() {
-		 datalist.saveGame(data);
+		 //datalist.saveGame(data);
 	}
 	private boolean test;
 	public Game(GameDataList datalist, GameData data) {

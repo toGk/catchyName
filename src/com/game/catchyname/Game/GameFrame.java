@@ -116,7 +116,8 @@ public class GameFrame extends JPanel implements Runnable{
 	}
 	
 	private void save() {
-		datalist.saveGame(gamedata);
+		datalist.saveData(gamedata);
+		datalist.saveGame();
 		frame.setTitle("SAVED");
 	}
 	

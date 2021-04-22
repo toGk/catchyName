@@ -36,7 +36,6 @@ public class NewGameFrame extends JFrame{
 	
 	public NewGameFrame(GameDataList datalist) {
 		this.datalist = datalist;
-		stream = new CustomOutputStream();
 		
 	    panel= new JPanel();
 	    archer = new JButton("Archer");
@@ -74,6 +73,7 @@ public class NewGameFrame extends JFrame{
 class ButtonListener implements ActionListener{
 	@Override
 	public void actionPerformed(ActionEvent e) {
+		stream = new CustomOutputStream();
 		Coordinates playerSpawn = new Coordinates(19,50);
 		if(e.getSource().equals(back)) {
 		    new MainFrame();
