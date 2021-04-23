@@ -84,12 +84,15 @@ public class GameFrame extends JPanel implements Runnable{
 		}
 	}
 	
-	public GameFrame(GameDataList datalist, GameData gamedata) {
+	public GameFrame(GameDataList datalist, String name) {
 		this.datalist = datalist;
-		this.gamedata = gamedata;
+		this.gamedata = datalist.getData(name);
 		champion = gamedata.getPlayer().getChampion();
 		level = Level.spawn;
 		champion.init(level);
+		for(int i=0;i<gamedata.getNpcs().length;i++) {
+			gamedata.getNpcs()[i].init(level);
+		}
 		screen = new Screen(width, height);
 		paused = false;
 
@@ -116,7 +119,6 @@ public class GameFrame extends JPanel implements Runnable{
 	}
 	
 	private void save() {
-		datalist.saveData(gamedata);
 		datalist.saveGame();
 		frame.setTitle("SAVED");
 	}
@@ -160,7 +162,10 @@ public class GameFrame extends JPanel implements Runnable{
 				if(key.f1) {
 					save();
 				}
-					
+				
+				for(int i=0;i<gamedata.getNpcs().length;i++) {
+					gamedata.getNpcs()[i].move(10, 10);
+				}
 				if((xa != 0 || ya != 0)){
 					champion.move(xa,ya);
 				}
@@ -184,6 +189,9 @@ public class GameFrame extends JPanel implements Runnable{
 		screen.clear();
 		level.render(champion.getX() - screen.width /2,champion.getY() - screen.height /2, screen);
 		champion.render(screen);
+		for(int i=0;i<gamedata.getNpcs().length;i++) {
+			gamedata.getNpcs()[i].render(screen);
+		}
 		for(int i=0;i<pixels.length;i++) {
 			pixels[i] = screen.pixels[i];
 		}

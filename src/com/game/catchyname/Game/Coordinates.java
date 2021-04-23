@@ -27,11 +27,7 @@ public final class Coordinates implements Serializable{
 	@Override
 	public boolean equals(Object o) {
 		Coordinates temp = (Coordinates) o;
-		if(temp.x == this.x&&temp.y == this.y) {
-			return true;
-		}else {
-			return false;
-		}	
+		return (temp.x == this.x&&temp.y == this.y);	
 	}
 
 }

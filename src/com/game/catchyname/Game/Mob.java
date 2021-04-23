@@ -29,7 +29,7 @@ public abstract class Mob implements Serializable{
 	
 	private int x,y;
 	private boolean removed = false;
-	protected Level level;
+	private Level level;
 	protected final Random random = new Random();
 	
 	

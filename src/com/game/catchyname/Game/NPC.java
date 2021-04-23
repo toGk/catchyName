@@ -1,6 +1,7 @@
 package com.game.catchyname.Game;
 
 import com.game.catchyname.graphics.Screen;
+import com.game.catchyname.graphics.Sprite;
 import com.game.catchyname.level.tile.SpawnLevel.Tile;
 
 public class NPC extends Mob{
@@ -26,7 +27,7 @@ public class NPC extends Mob{
 		int xx = getX()-16;
 		int yy = getY()-16;
 		//screen.renderPlayer(xx, yy, Sprite.spawnBlood);
-		screen.renderTile(xx, yy, Tile.spawnBlood);
+		screen.renderPlayer(xx, yy, Sprite.testingSprite);
 	}
 
 }

@@ -15,7 +15,7 @@ import javax.swing.JTextField;
  * 
  * CHOOSE CHAMPION CLASS - ENTER NAME
  * 
- * then create actual gameplay, creates Game()
+ * then create actual gameplay, creates GameFrame()
  */
 
 public class NewGameFrame extends JFrame{
@@ -74,22 +74,22 @@ class ButtonListener implements ActionListener{
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		stream = new CustomOutputStream();
-		Coordinates playerSpawn = new Coordinates(19,50);
 		if(e.getSource().equals(back)) {
 		    new MainFrame();
 		    dispose();
 	    }else if(datalist.getData(name.getText()) == null){
-		
+	    	Coordinates playerSpawn = new Coordinates(19,50);
+	    	Champion champion = null;
 		    if(e.getSource().equals(archer)) {
-			    new GameFrame(datalist,new GameData(name.getText(),new Archer(playerSpawn)));
-			    dispose();
+		    	champion = new Archer(playerSpawn);
 		    }else if(e.getSource().equals(assassin)) {
-			    new GameFrame(datalist, new GameData(name.getText(),new Assassin(playerSpawn)));
-			    dispose();
+		    	champion = new Assassin(playerSpawn);
 		    }else if(e.getSource().equals(mage)) {
-			    new GameFrame(datalist, new GameData(name.getText(),new Mage(playerSpawn)));
-			    dispose();
+		    	champion = new Mage(playerSpawn);
 		    }
+		    datalist.saveData(new GameData(name.getText(),champion));
+		    new GameFrame(datalist,name.getText());
+		    dispose();
 		}else {
 			stream.redirectStream(result);
 			System.out.println("user " + name.getText() + " already exists");

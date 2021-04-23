@@ -19,7 +19,7 @@ import javax.swing.JTextField;
  * prints the possible error message at JFrame
  * 
  * 
- * then create actual gameplay, creates Game()
+ * then create actual gameplay, creates GameFrame()
  */
 
 public class LoadFrame extends JFrame{
@@ -37,7 +37,6 @@ public class LoadFrame extends JFrame{
 	
 	public LoadFrame(GameDataList datalist) {
 		this.datalist = datalist;
-		stream = new CustomOutputStream();
 		
 	    panel= new JPanel();
 	    loadGame = new JButton("Load Game");
@@ -69,9 +68,10 @@ public class LoadFrame extends JFrame{
 class ButtonListener implements ActionListener{
 	@Override
 	public void actionPerformed(ActionEvent e) {
+		stream = new CustomOutputStream();
 		if(e.getSource().equals(loadGame)) {
 			stream.redirectStream(result);
-			new GameFrame(datalist,datalist.getData(name.getText()));
+			new GameFrame(datalist,name.getText());
 			dispose();
 		}else if(e.getSource().equals(back)) {
 			new MainFrame();
