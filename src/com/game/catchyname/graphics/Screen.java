@@ -14,7 +14,7 @@ public class Screen {//implements Serializable{
 	public final int MAP_SIZE = 8;
 	public final int MAP_SIZE_MASK = MAP_SIZE -1;
 	private final int TILES=64;
-	public int width, height;
+	private int width, height;
 	public int[] pixels;
 	public int[]tiles = new int[TILES*TILES];    //4096 tiles
 	public int xOffset,yOffset;
@@ -55,10 +55,10 @@ public class Screen {//implements Serializable{
 			int ya = y + yp;    					
 			for( int x=0; x< tile.sprite.SIZE ; x++) {
 				int xa = x + xp;   
-				if(xa < -tile.sprite.SIZE || xa >= width || ya < 0 || ya >= height)break;
+				if(xa < -tile.sprite.SIZE || xa >= getWidth() || ya < 0 || ya >= getHeight())break;
 				if(xa<0) xa=0;
 				//^^^^^^^^^only render the tiles I am seeing and not all the map, important line of code
-				pixels[xa+ya*width] = tile.sprite.pixels[x+y*tile.sprite.SIZE];
+				pixels[xa+ya*getWidth()] = tile.sprite.pixels[x+y*tile.sprite.SIZE];
 				//^^^^^^^^^where the sprite is rendered----------which pixels of the sprite are rendered
 				
 			}
@@ -83,12 +83,12 @@ public class Screen {//implements Serializable{
 			int ya = y + yp;    					
 			for( int x=0; x< 32 ; x++) {
 				int xa = x + xp;   
-				if(xa < -32 || xa >= width || ya < 0 || ya >= height)break;
+				if(xa < -32 || xa >= getWidth() || ya < 0 || ya >= getHeight())break;
 				if(xa<0) xa=0;
 				int col =sprite.pixels[x+y*32];
 				if(col != 0xffc2185b)
 				//^^^^^^^^^only render the tiles I am seeing and not all the map, important line of code
-					pixels[xa+ya*width] = sprite.pixels[x+y*sprite.SIZE];
+					pixels[xa+ya*getWidth()] = sprite.pixels[x+y*sprite.SIZE];
 				//^^^^^^^^^where the sprite is rendered----------which pixels of the sprite are rendered
 			}
 		}
@@ -102,14 +102,22 @@ public class Screen {//implements Serializable{
 			int ya = y+yp;
 			for(int x=0 ; x<tile.sprite.SIZE ; x++) {
 				int xa = x + xp;
-				if(xa < -16 || xa >= width || ya < 0 || ya >= height)break;
+				if(xa < -16 || xa >= getWidth() || ya < 0 || ya >= getHeight())break;
 				if(xa<0) xa=0;
 				int col = tile.sprite.pixels[x+y*tile.sprite.SIZE];
 				if(col != 0xffffac75)
-					pixels[xa+ya*width] = tile.sprite.pixels[x+y*tile.sprite.SIZE];
+					pixels[xa+ya*getWidth()] = tile.sprite.pixels[x+y*tile.sprite.SIZE];
 					
 			}
 		}
+	}
+
+	public int getWidth() {
+		return width;
+	}
+
+	public int getHeight() {
+		return height;
 	}
 	
 	

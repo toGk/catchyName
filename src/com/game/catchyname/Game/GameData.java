@@ -31,8 +31,6 @@ public final class GameData implements Serializable{
 	public ArrayList<Monument> getMonuments() {
 		return allMonuments;
 	}
-
-	
 	
 	public NPC[] getNpcs() {
 		return NPCS;

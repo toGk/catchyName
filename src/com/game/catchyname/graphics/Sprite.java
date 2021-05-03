@@ -2,7 +2,7 @@ package com.game.catchyname.graphics;
 
 import java.io.Serializable;
 
-public class Sprite {//implements Serializable {
+public class Sprite implements Serializable {
 
 	/**
 	 * 

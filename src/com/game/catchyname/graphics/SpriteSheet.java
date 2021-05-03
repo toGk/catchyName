@@ -6,7 +6,7 @@ import java.io.Serializable;
 
 import javax.imageio.ImageIO;
 
-public class SpriteSheet {//implements Serializable{
+public class SpriteSheet implements Serializable{
 
 	/**
 	 * 

@@ -16,6 +16,7 @@ import javax.swing.JPanel;
 
 import com.game.catchyname.graphics.Screen;
 import com.game.cathyname.level.Level;
+import com.game.cathyname.level.SpawnLevel;
 
 public class GameFrame extends JPanel implements Runnable{
 	/**
@@ -88,11 +89,7 @@ public class GameFrame extends JPanel implements Runnable{
 		this.datalist = datalist;
 		this.gamedata = datalist.getData(name);
 		champion = gamedata.getPlayer().getChampion();
-		level = Level.spawn;
-		champion.init(level);
-		for(int i=0;i<gamedata.getNpcs().length;i++) {
-			gamedata.getNpcs()[i].init(level);
-		}
+		level = new SpawnLevel();
 		screen = new Screen(width, height);
 		paused = false;
 
@@ -162,12 +159,8 @@ public class GameFrame extends JPanel implements Runnable{
 				if(key.f1) {
 					save();
 				}
-				
-				for(int i=0;i<gamedata.getNpcs().length;i++) {
-					gamedata.getNpcs()[i].move(10, 10);
-				}
 				if((xa != 0 || ya != 0)){
-					champion.move(xa,ya);
+					champion.move(xa,ya,level);
 				}
 				delta--; 
 				updates++;
@@ -187,11 +180,8 @@ public class GameFrame extends JPanel implements Runnable{
 	}
 	public void paintComponent(Graphics g) {
 		screen.clear();
-		level.render(champion.getX() - screen.width /2,champion.getY() - screen.height /2, screen);
+		level.render(champion.getX() - screen.getWidth() /2,champion.getY() - screen.getHeight() /2, screen);
 		champion.render(screen);
-		for(int i=0;i<gamedata.getNpcs().length;i++) {
-			gamedata.getNpcs()[i].render(screen);
-		}
 		for(int i=0;i<pixels.length;i++) {
 			pixels[i] = screen.pixels[i];
 		}

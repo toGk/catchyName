@@ -31,7 +31,7 @@ import javax.swing.JTextArea;
  *               ...
  *               
  *               try {
-			        stream.close(); //and at the end of the block i close it(or when there is a termination)
+			    stream.close(); //and at the end of the block i close it(or when there is a termination)
 		         } catch (IOException e1) {
 			        e1.printStackTrace();
 		         }
