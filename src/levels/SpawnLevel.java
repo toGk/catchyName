@@ -1,4 +1,6 @@
-package com.game.cathyname.level;
+package levels;
+
+import domain.Level;
 
 public class SpawnLevel extends Level{
 

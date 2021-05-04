@@ -1,4 +1,7 @@
-package com.game.catchyname.Game;
+package champions;
+
+import domain.Champion;
+import utilities.Coordinates;
 
 public class Mage extends Champion{
 

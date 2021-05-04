@@ -1,4 +1,4 @@
-package com.game.cathyname.level;
+package domain;
 
 import java.awt.image.BufferedImage;
 import java.io.IOException;
@@ -21,7 +21,7 @@ public abstract class Level implements Serializable{
 	
 	public Level(String path) {
 		try {
-			BufferedImage image = ImageIO.read(SpawnLevel.class.getResource(path));
+			BufferedImage image = ImageIO.read(Level.class.getResource(path));
 			width = image.getWidth();
 			height = image.getHeight();
 			

@@ -1,4 +1,4 @@
-package com.game.catchyname.Game;
+package frames;
 
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -15,8 +15,12 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import com.game.catchyname.graphics.Screen;
-import com.game.cathyname.level.Level;
-import com.game.cathyname.level.SpawnLevel;
+
+import domain.Champion;
+import domain.GameData;
+import domain.GameDataList;
+import domain.Level;
+import levels.SpawnLevel;
 
 public class GameFrame extends JPanel implements Runnable{
 	/**
@@ -71,20 +75,6 @@ public class GameFrame extends JPanel implements Runnable{
 		}
 	}
 	
-	class ButtonListener implements ActionListener{
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			if(e.getSource().equals(pauseButton)) {				
-				if(paused==false) {
-					pauseButton.setText("Resume");
-				}else {
-					pauseButton.setText("  Pause  ");
-				}
-				paused =! paused;
-			}
-		}
-	}
-	
 	public GameFrame(GameDataList datalist, String name) {
 		this.datalist = datalist;
 		this.gamedata = datalist.getData(name);
@@ -100,8 +90,16 @@ public class GameFrame extends JPanel implements Runnable{
 		frame.setLayout(new FlowLayout ());
 		frame.add(pauseButton);
 		
-		ButtonListener btnListener = new ButtonListener();
-		pauseButton.addActionListener(btnListener);
+		pauseButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e){
+				if(paused==false) {
+					pauseButton.setText("Resume");
+				}else {
+					pauseButton.setText("  Pause  ");
+				}
+				paused =! paused;
+            }
+        });
 		
 		key = new Keyboard();
 		this.addKeyListener(key);

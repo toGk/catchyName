@@ -1,14 +1,21 @@
-package com.game.catchyname.Game;
+package frames;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.IOException;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+
+import champions.Archer;
+import champions.Assassin;
+import champions.Mage;
+import domain.Champion;
+import domain.GameData;
+import domain.GameDataList;
+import utilities.Coordinates;
 
 /*
  * this class is a JFrame for the NEW GAME options:
@@ -32,7 +39,6 @@ public class NewGameFrame extends JFrame{
 	private JTextField name;
 	private GameDataList datalist;
 	private JTextArea result;
-	private CustomOutputStream stream;
 	
 	public NewGameFrame(GameDataList datalist) {
 		this.datalist = datalist;
@@ -54,13 +60,45 @@ public class NewGameFrame extends JFrame{
 	    panel.add(name);
 	    panel.add(back);
 	    panel.add(result);
-		
-		ButtonListener btnListener = new ButtonListener();
-		archer.addActionListener(btnListener);
-		assassin.addActionListener(btnListener);
-		mage.addActionListener(btnListener);
-		back.addActionListener(btnListener);
-		
+
+	    archer.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e){
+            	try {
+					checkAccount();
+					createGame(new Archer(new Coordinates(19,50)));
+				} catch (Exception e1) {
+					e1.printStackTrace();
+				}
+            }
+        });
+	    assassin.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e){
+            	try {
+					checkAccount();
+					createGame(new Assassin(new Coordinates(19,50)));
+				} catch (Exception e1) {
+					e1.printStackTrace();
+				}
+            }
+        });
+	    mage.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e){
+            	try {
+					checkAccount();
+					createGame(new Mage(new Coordinates(19,50)));
+				} catch (Exception e1) {
+					e1.printStackTrace();
+				}
+				
+            }
+        });
+	    back.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e){
+    		    new MainFrame();
+    		    dispose();
+            }
+        });
+	    
 		this.getContentPane().add(panel);
 		
 		this.setVisible(true);
@@ -68,38 +106,21 @@ public class NewGameFrame extends JFrame{
 		setTitle("New Game Frame");
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
-
-
-class ButtonListener implements ActionListener{
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		stream = new CustomOutputStream();
-		if(e.getSource().equals(back)) {
-		    new MainFrame();
-		    dispose();
-	    }else if(datalist.getData(name.getText()) == null){
-	    	Coordinates playerSpawn = new Coordinates(19,50);
-	    	Champion champion = null;
-		    if(e.getSource().equals(archer)) {
-		    	champion = new Archer(playerSpawn);
-		    }else if(e.getSource().equals(assassin)) {
-		    	champion = new Assassin(playerSpawn);
-		    }else if(e.getSource().equals(mage)) {
-		    	champion = new Mage(playerSpawn);
-		    }
-		    datalist.saveData(new GameData(name.getText(),champion));
-		    new GameFrame(datalist,name.getText());
-		    dispose();
-		}else {
-			stream.redirectStream(result);
-			System.out.println("user " + name.getText() + " already exists");
-		}
-        try {
-			stream.close();
-		} catch (IOException e1) {
-			e1.printStackTrace();
-		}
-		
+	
+	private void createGame(Champion champion){
+	     datalist.saveData(new GameData(name.getText(),champion));
+	     new GameFrame(datalist,name.getText());
+	     dispose();
 	}
-}
+	
+	private void checkAccount() throws Exception {
+		if( datalist.getData(name.getText()) != null) {
+			printResult();
+			throw new Exception();
+		}		
+	}
+	
+	private void printResult() {
+		result.setText("user " + name.getText() + " already exists");
+	}
 }

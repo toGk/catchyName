@@ -1,4 +1,4 @@
-package com.game.catchyname.Game;
+package utilities;
 
 import java.io.Serializable;
 

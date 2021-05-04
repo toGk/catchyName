@@ -1,10 +1,11 @@
-package com.game.catchyname.Game;
+package domain;
 
 import java.io.Serializable;
 
 import com.game.catchyname.graphics.Screen;
 import com.game.catchyname.graphics.Sprite;
-import com.game.cathyname.level.Level;
+
+import utilities.Coordinates;
 
 public abstract class Entity implements Serializable{
 	

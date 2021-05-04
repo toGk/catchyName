@@ -1,6 +1,8 @@
-package com.game.catchyname.Game;
+package domain;
 
 import com.game.catchyname.graphics.Sprite;
+
+import utilities.Coordinates;
 
 public class NPC extends Entity{
 	/**

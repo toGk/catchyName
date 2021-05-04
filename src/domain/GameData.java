@@ -1,7 +1,10 @@
-package com.game.catchyname.Game;
+package domain;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+
+import domain.lists.ItemList;
+import utilities.Coordinates;
 
 public final class GameData implements Serializable{
 	/**

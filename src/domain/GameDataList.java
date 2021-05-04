@@ -1,4 +1,4 @@
-package com.game.catchyname.Game;
+package domain;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;

@@ -1,6 +1,9 @@
-package com.game.catchyname.Game;
+package domain;
 
 import com.game.catchyname.graphics.Sprite;
+
+import domain.lists.ItemList;
+import utilities.Coordinates;
 
 public abstract class Champion extends Entity{
 	/**

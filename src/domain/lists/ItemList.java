@@ -1,7 +1,9 @@
-package com.game.catchyname.Game;
+package domain.lists;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+
+import domain.Item;
 
 public class ItemList implements Serializable{
 	/**

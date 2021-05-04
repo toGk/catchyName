@@ -1,4 +1,6 @@
-package com.game.catchyname.Game;
+package main;
+
+import frames.MainFrame;
 
 /*
  * this is a class start the sequence - > creates a MainFrame

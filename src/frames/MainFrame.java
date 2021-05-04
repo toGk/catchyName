@@ -1,4 +1,4 @@
-package com.game.catchyname.Game;
+package frames;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -6,6 +6,8 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+
+import domain.GameDataList;
 /*
  * this class is a JFrame for the main menu:NEW GAME, LOAD GAME, SETTINGS, SCOREBOARD
  */
@@ -36,11 +38,24 @@ public class MainFrame extends JFrame{
 	    panel.add(loadGame);
 	    panel.add(clearAllData);
 	    
-		
-		ButtonListener btnListener = new ButtonListener();
-		newGame.addActionListener(btnListener);
-		loadGame.addActionListener(btnListener);
-		clearAllData.addActionListener(btnListener);
+	    newGame.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e){
+    			new NewGameFrame(datalist);
+    			dispose();
+            }
+        });
+	    loadGame.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e){
+    			new LoadFrame(datalist);
+    			dispose();
+            }
+        });
+		clearAllData.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e){
+    			datalist = new GameDataList();
+    			datalist.saveGame();
+            }
+        });
 		
 		this.getContentPane().add(panel);
 		
@@ -49,22 +64,4 @@ public class MainFrame extends JFrame{
 		setTitle("Main Frame");
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
-
-
-class ButtonListener implements ActionListener{
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		if(e.getSource().equals(clearAllData)) {
-			datalist = new GameDataList();
-			datalist.saveGame();
-		}
-		if(e.getSource().equals(newGame)) {
-			new NewGameFrame(datalist);
-			dispose();
-		}else if(e.getSource().equals(loadGame)) {
-			new LoadFrame(datalist);
-			dispose();
-		}
-	}
-}
 }

@@ -1,14 +1,15 @@
-package com.game.catchyname.Game;
+package frames;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.IOException;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+
+import domain.GameDataList;
 
 /*
  * this class is a JFrame for the LOAD GAME options:
@@ -31,13 +32,11 @@ public class LoadFrame extends JFrame{
 	private JButton loadGame;
 	private JButton back;
 	private JTextField name;
-	private CustomOutputStream stream;
 	private JTextArea result;
 	private GameDataList datalist;
 	
 	public LoadFrame(GameDataList datalist) {
 		this.datalist = datalist;
-		
 	    panel= new JPanel();
 	    loadGame = new JButton("Load Game");
 	    back = new JButton("back");
@@ -52,9 +51,24 @@ public class LoadFrame extends JFrame{
 	    panel.add(back);
 	    panel.add(result);
 		
-		ButtonListener btnListener = new ButtonListener();
-		loadGame.addActionListener(btnListener);
-		back.addActionListener(btnListener);
+	    loadGame.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e){
+            	try {
+					checkAccount();
+					new GameFrame(datalist,name.getText());
+    			    dispose();
+				} catch (Exception e1) {
+					e1.printStackTrace();
+				}
+
+            }
+        });
+	    back.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e){
+    			new MainFrame();
+    			dispose();
+            }
+        });
 		
 		this.getContentPane().add(panel);
 		
@@ -63,25 +77,15 @@ public class LoadFrame extends JFrame{
 		setTitle("Load Frame");
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
-
-
-class ButtonListener implements ActionListener{
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		stream = new CustomOutputStream();
-		if(e.getSource().equals(loadGame)) {
-			stream.redirectStream(result);
-			new GameFrame(datalist,name.getText());
-			dispose();
-		}else if(e.getSource().equals(back)) {
-			new MainFrame();
-			dispose();
-		}
-        try {
-			stream.close();
-		} catch (IOException e1) {
-			e1.printStackTrace();
+	
+	private void checkAccount() throws Exception {
+		if( datalist.getData(name.getText()) == null) {
+			printResult();
+			throw new Exception();
 		}
 	}
-}
+	
+	private void printResult() {
+		result.setText("user " + name.getText() + " NOT exists");
+	}
 }
