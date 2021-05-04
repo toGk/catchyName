@@ -9,7 +9,7 @@ import javax.imageio.ImageIO;
 import com.game.catchyname.graphics.Screen;
 import com.game.catchyname.level.tile.SpawnLevel.Tile;
 
-public abstract class Level implements Serializable{
+public final class Level implements Serializable{
 	/**
 	 * 
 	 */
@@ -18,6 +18,7 @@ public abstract class Level implements Serializable{
 	protected int width,height;
 	protected int[] tilesInt; 											// to know in witch index I am gonna create a tile
 	protected int[] tiles;	
+	public static final String spawnPath = "/levels/Spawn.png/";
 	
 	public Level(String path) {
 		try {
@@ -49,8 +50,7 @@ public abstract class Level implements Serializable{
 				getTile(x,y).render(x,y,screen);			//tile precision not pixel precision
 				
 			}
-		}
-		
+		}	
 	}
 	
 	public Tile getTile(int x, int y) {

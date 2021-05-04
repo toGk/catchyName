@@ -15,6 +15,7 @@ public final class GameData implements Serializable{
 	private ItemList allItems;
 	private Player player;
 	private NPC[] NPCS = new NPC[1];
+	private Level level;
 	
 	public GameData(String name,Champion champion) {
 		for(int i=0;i<NPCS.length;i++) {
@@ -23,6 +24,7 @@ public final class GameData implements Serializable{
 		allMonuments =new ArrayList<Monument>();
 		allItems = new ItemList();
 		player = new Player(name,champion);
+		level = new Level(Level.spawnPath);
 	}
 
 	public Player getPlayer() {
@@ -37,5 +39,9 @@ public final class GameData implements Serializable{
 	
 	public NPC[] getNpcs() {
 		return NPCS;
+	}
+
+	public Level getLevel() {
+		return level;
 	}
 }

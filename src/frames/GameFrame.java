@@ -20,7 +20,6 @@ import domain.Champion;
 import domain.GameData;
 import domain.GameDataList;
 import domain.Level;
-import levels.SpawnLevel;
 
 public class GameFrame extends JPanel implements Runnable{
 	/**
@@ -79,7 +78,7 @@ public class GameFrame extends JPanel implements Runnable{
 		this.datalist = datalist;
 		this.gamedata = datalist.getData(name);
 		champion = gamedata.getPlayer().getChampion();
-		level = new SpawnLevel();
+		level = gamedata.getLevel();
 		screen = new Screen(width, height);
 		paused = false;
 
