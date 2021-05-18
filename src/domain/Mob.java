@@ -1,31 +1,26 @@
 package domain;
 
-import java.util.ArrayList;
-
 import com.game.catchyname.graphics.Sprite;
 
 import utilities.Coordinates;
 
-public abstract class Champion extends Entity{
+public class Mob extends Entity{
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private ArrayList<Item> inventory;
+	private Item loot;
 	
+	public Mob(Coordinates spawn,Sprite sprite) {
+		super(spawn,sprite);
+	}
+	
+	public Item getItem() {
+		return loot;
+	}
 
-	
-	public Champion(Coordinates playerSpawn,Sprite sprite) {
-		super(playerSpawn,sprite);
-		inventory = new ArrayList<Item>();
-	}
-	
-	public void pickItem(Item item) {
-		inventory.add(item);
-	}
-	
-	public ArrayList<Item> getInventory() {
-		return inventory;
+	public void removeItem() {
+		loot = null;
 	}
 	
 	public void move(int xa , int ya,Level level) {
@@ -46,4 +41,5 @@ public abstract class Champion extends Entity{
 		}
 		spawn.update(x,y);	
 	}
+	
 }

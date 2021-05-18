@@ -15,14 +15,15 @@ public final class Level implements Serializable{
 	 */
 	private static final long serialVersionUID = 1L;
 	// Because will have only 1 level loaded at a time I am gonna make a global variable level
+	protected int levelid;
 	protected int width,height;
 	protected int[] tilesInt; 											// to know in witch index I am gonna create a tile
 	protected int[] tiles;	
-	public static final String spawnPath = "/levels/Spawn.png/";
 	
-	public Level(String path) {
+	public Level(int levelid) {
+		this.levelid = levelid;
 		try {
-			BufferedImage image = ImageIO.read(Level.class.getResource(path));
+			BufferedImage image = ImageIO.read(Level.class.getResource("/levels/"+ levelid +"Spawn.png/"));
 			width = image.getWidth();
 			height = image.getHeight();
 			
@@ -48,7 +49,6 @@ public final class Level implements Serializable{
 		for(int y = y0 ; y < y1 ; y++) {				// render every pixel that is seen in the frame
 			for(int x = x0 ; x < x1 ; x++) {
 				getTile(x,y).render(x,y,screen);			//tile precision not pixel precision
-				
 			}
 		}	
 	}
@@ -61,6 +61,10 @@ public final class Level implements Serializable{
 		if(tiles[x+y*width] == Tile.colSpawnBricks2 )return Tile.spawnBricks2;
 		if(tiles[x+y*width] == Tile.colSpawnBlood )return Tile.spawnBlood;
 		return Tile.spawnVoid;
+	}
+	
+	public int getId() {
+		return levelid;
 	}
 	
 }

@@ -9,6 +9,8 @@ import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
+import com.game.catchyname.graphics.Sprite;
+
 import champions.Archer;
 import champions.Assassin;
 import champions.Mage;
@@ -60,12 +62,14 @@ public class NewGameFrame extends JFrame{
 	    panel.add(name);
 	    panel.add(back);
 	    panel.add(result);
+	    
+	    int levelid = 0;
 
 	    archer.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e){
             	try {
 					checkAccount();
-					createGame(new Archer(new Coordinates(19,50)));
+					createGame(new Archer(new Coordinates(19,50,25,levelid),Sprite.testingSprite));
 				} catch (Exception e1) {
 					e1.printStackTrace();
 				}
@@ -75,7 +79,7 @@ public class NewGameFrame extends JFrame{
             public void actionPerformed(ActionEvent e){
             	try {
 					checkAccount();
-					createGame(new Assassin(new Coordinates(19,50)));
+					createGame(new Assassin(new Coordinates(19,50,25,levelid),Sprite.testingSprite));
 				} catch (Exception e1) {
 					e1.printStackTrace();
 				}
@@ -85,7 +89,7 @@ public class NewGameFrame extends JFrame{
             public void actionPerformed(ActionEvent e){
             	try {
 					checkAccount();
-					createGame(new Mage(new Coordinates(19,50)));
+					createGame(new Mage(new Coordinates(19,50,25,levelid),Sprite.testingSprite));
 				} catch (Exception e1) {
 					e1.printStackTrace();
 				}

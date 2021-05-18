@@ -7,14 +7,13 @@ import com.game.catchyname.graphics.Sprite;
 
 import utilities.Coordinates;
 
-public abstract class Entity implements Serializable{
+public abstract class Entity extends Renderables implements Serializable {
 	
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 	
-	protected Coordinates spawn;
 	protected int x,y;
 	
 	protected int dir; //east,west....
@@ -22,38 +21,23 @@ public abstract class Entity implements Serializable{
 	
 	protected int hp = 10;
 	protected int attack = 2;
-	protected Sprite sprite;
 
-	public Entity(Coordinates spawn) {
+	public Entity(Coordinates spawn,Sprite sprite) {
 		this.spawn = spawn;
 		x = spawn.getX();
 		y = spawn.getY();
+		this.sprite = sprite;
 	}	
 	
 	public void damage(Entity target) {
 		target.hp-=this.attack;
-	}	
-	
-	public void move(int xa , int ya,Level level) {
-		if(xa != 0 && ya != 0) {
-			move(xa,0,level);
-			move(0,ya,level);
-			return ;	//if I dont return the will be moving slowly
-		}
-		
-		if(xa >0) dir=1; // east
-		if(xa <0) dir=3; // west
-		if(ya > 0) dir =2;//south
-		if(ya <0) dir =0; //north
-		
-		if(!collision(xa,ya,level)) {
-			x += xa;
-			y += ya;
-		}
-		
 	}
 	
-	private boolean collision(int xa, int ya,Level level) {	
+	protected void move(int xa , int ya,Level level) {
+	
+	}
+	
+	protected boolean collision(int xa, int ya,Level level) {	
 		for(int c=0 ; c<4 ; c++) {	
 			//-16 ΠΑΡΑΔΟΧΗ for player to be rendered in the middle of the screen, because to be pretty I have to render +1 tile in width
 			// and +1 in height
@@ -79,5 +63,15 @@ public abstract class Entity implements Serializable{
 	public int getY() {
 		return y;
 	}
+	
+	public Coordinates getCoordinates() {
+		return spawn;
+	}
+	
+	public boolean isAlive() {
+		return hp>0;
+	}
+	
+
 
 }

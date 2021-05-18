@@ -1,30 +1,29 @@
 package domain;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 
 import domain.lists.ItemList;
-import utilities.Coordinates;
+import domain.lists.MobList;
 
 public final class GameData implements Serializable{
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private ArrayList<Monument> allMonuments;
 	private ItemList allItems;
 	private Player player;
-	private NPC[] NPCS = new NPC[1];
 	private Level level;
+	private MobList allmobs;
 	
 	public GameData(String name,Champion champion) {
-		for(int i=0;i<NPCS.length;i++) {
-			NPCS[i] = new NPC(new Coordinates(19,50));
-		}
-		allMonuments =new ArrayList<Monument>();
-		allItems = new ItemList();
+		level = new Level(champion.getCoordinates().getLevelId());
+		allmobs = new MobList(level);
+		allItems = new ItemList(level);
 		player = new Player(name,champion);
-		level = new Level(Level.spawnPath);
+	}
+	
+	public MobList getMobList() {
+		return allmobs;
 	}
 
 	public Player getPlayer() {
@@ -32,13 +31,6 @@ public final class GameData implements Serializable{
 	}
 	public ItemList getItemList() {
 		return allItems;
-	}
-	public ArrayList<Monument> getMonuments() {
-		return allMonuments;
-	}
-	
-	public NPC[] getNpcs() {
-		return NPCS;
 	}
 
 	public Level getLevel() {
