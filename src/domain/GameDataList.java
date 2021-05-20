@@ -23,11 +23,11 @@ public final class GameDataList implements Serializable{
 		return data.get(name);
 	}
 	
-	public void saveData(GameData gamedata) {
-		this.data.put(gamedata.getPlayer().getName(), gamedata);
+	public void saveData(String name, GameData gamedata) {
+		this.data.put(name, gamedata);
 	}
 	
-	public synchronized void saveGame() {
+	public void saveGame() {
 		try {
 			FileOutputStream fileOut = new FileOutputStream("game.ser");
 			ObjectOutputStream out = new ObjectOutputStream(fileOut);	
@@ -40,7 +40,7 @@ public final class GameDataList implements Serializable{
 		
 	}
 	
-	public synchronized static GameDataList loadGame() {
+	public static GameDataList loadGame() {
 		try {
 			FileInputStream fileIn = new FileInputStream("game.ser");
 			ObjectInputStream in = new ObjectInputStream(fileIn);

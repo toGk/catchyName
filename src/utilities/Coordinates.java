@@ -2,7 +2,7 @@ package utilities;
 
 import java.io.Serializable;
 
-public final class Coordinates implements Serializable{
+public class Coordinates implements Serializable{
 	/**
 	 * 
 	 */
@@ -11,13 +11,11 @@ public final class Coordinates implements Serializable{
 	private int y;
 	private final int TILE_SIZE=16;
 	private int hitbox;
-	private int levelid;
 	
-	public Coordinates(int x,int y,int hitbox,int levelid) {
+	public Coordinates(int x,int y,int hitbox) {
 		this.x = x*TILE_SIZE;
 		this.y = y*TILE_SIZE;
 		this.hitbox = hitbox;
-		this.levelid = levelid;
 	}
 	
 	public int getX() {
@@ -27,16 +25,6 @@ public final class Coordinates implements Serializable{
 	public int getY() {
 		return y;
 	}
-
-	@Override
-	/*public boolean equals(Object o) {
-		Coordinates temp = (Coordinates) o;
-		return (temp.x == this.x&&temp.y == this.y);	
-	}*/
-	
-   public int hashCode() {
-       return levelid;
-   }
 	
 	public boolean equals(Object o) {
 		Coordinates temp = (Coordinates) o;
@@ -47,14 +35,9 @@ public final class Coordinates implements Serializable{
 			return false;
 		}	
 	}
-
+	
 	public void update(int x2, int y2) {
 		this.x = x2;
 		this.y = y2;
 	}
-	
-	public int getLevelId() {
-		return levelid;
-	}
-
 }

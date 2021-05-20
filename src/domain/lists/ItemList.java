@@ -1,7 +1,7 @@
 package domain.lists;
 
 import java.io.Serializable;
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.Random;
 
 import com.game.catchyname.graphics.Screen;
@@ -16,46 +16,52 @@ public class ItemList implements Serializable{
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private HashMap<Coordinates,Item> items;
+	private ArrayList<Item> items;
 	private Random random;
 	
 	public ItemList(Level level) {
-		items = new HashMap<Coordinates,Item>();
+		items = new ArrayList<Item>();
 		
 		random = new Random();
-		int itemCounter = random.nextInt(10);
-		int hitbox = 50;
+		int itemCounter = random.nextInt(1000);
+		int hitbox = 5;
 
 		for(int i=0;i<itemCounter;i++) {
 			int xLimit = random.nextInt(100); 
 		    int yLimit = random.nextInt(100); 
-			//if(level.getTile(xLimit,yLimit).solid()) {
-			   Coordinates temp = new Coordinates(xLimit,yLimit,hitbox,level.getId());
-			   items.put(temp, new Item(temp,Sprite.testingSprite));
-			//}
+			Coordinates temp = new Coordinates(xLimit,yLimit,hitbox);
+			items.add(new Item(temp,Sprite.testingSprite));
 		}
 	}
 	
-	public void putItem(Coordinates coordinates,Item item) {
-	    items.put(coordinates, item);
+	public void addItem(Item item) {
+	    items.add(item);
 	}
 	
 	public Item getItem(Coordinates coordinates){
-		return items.get(coordinates);
+		for(Item item:items) {
+			if(item!=null) {
+				if(item.isInLocation(coordinates)) {
+				    return item;
+			    }
+			}
+		}
+		return null;
 	}
 
 	public void render(Screen screen) {
-		for(Coordinates coordinates:items.keySet()) {
-			items.get(coordinates).render(screen);
+		for(Item item:items) {
+			if(item!=null) {
+			   item.render(screen);
+			}
 	    }
 	}
 	
-	public void remove(Coordinates coordinates, Item temp) {
-		items.remove(coordinates, temp);
+	public void remove(Item temp) {
+		items.remove(temp);
 	}
 	
-	
-	public HashMap<Coordinates,Item> getC(){
+	public ArrayList<Item> getC(){
 		return items;
 	}
 

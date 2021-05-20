@@ -17,6 +17,7 @@ import champions.Mage;
 import domain.Champion;
 import domain.GameData;
 import domain.GameDataList;
+import domain.Player;
 import utilities.Coordinates;
 
 /*
@@ -62,14 +63,12 @@ public class NewGameFrame extends JFrame{
 	    panel.add(name);
 	    panel.add(back);
 	    panel.add(result);
-	    
-	    int levelid = 0;
 
 	    archer.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e){
             	try {
 					checkAccount();
-					createGame(new Archer(new Coordinates(19,50,25,levelid),Sprite.testingSprite));
+					createGame(new Archer(new Coordinates(19,50,5),Sprite.testingSprite));
 				} catch (Exception e1) {
 					e1.printStackTrace();
 				}
@@ -79,7 +78,7 @@ public class NewGameFrame extends JFrame{
             public void actionPerformed(ActionEvent e){
             	try {
 					checkAccount();
-					createGame(new Assassin(new Coordinates(19,50,25,levelid),Sprite.testingSprite));
+					createGame(new Assassin(new Coordinates(19,50,5),Sprite.testingSprite));
 				} catch (Exception e1) {
 					e1.printStackTrace();
 				}
@@ -89,7 +88,7 @@ public class NewGameFrame extends JFrame{
             public void actionPerformed(ActionEvent e){
             	try {
 					checkAccount();
-					createGame(new Mage(new Coordinates(19,50,25,levelid),Sprite.testingSprite));
+					createGame(new Mage(new Coordinates(19,50,5),Sprite.testingSprite));
 				} catch (Exception e1) {
 					e1.printStackTrace();
 				}
@@ -112,7 +111,7 @@ public class NewGameFrame extends JFrame{
 	}
 	
 	private void createGame(Champion champion){
-	     datalist.saveData(new GameData(name.getText(),champion));
+	     datalist.saveData(name.getText(),new GameData(new Player(name.getText(),champion),"0"));
 	     new GameFrame(datalist,name.getText());
 	     dispose();
 	}

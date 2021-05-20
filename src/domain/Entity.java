@@ -23,21 +23,31 @@ public abstract class Entity extends Renderables implements Serializable {
 	protected int attack = 2;
 
 	public Entity(Coordinates spawn,Sprite sprite) {
-		this.spawn = spawn;
+		super(spawn,sprite);
 		x = spawn.getX();
 		y = spawn.getY();
-		this.sprite = sprite;
 	}	
 	
-	public void damage(Entity target) {
-		target.hp-=this.attack;
-	}
-	
 	protected void move(int xa , int ya,Level level) {
-	
+		if(xa != 0 && ya != 0) {
+			move(xa,0,level);
+			move(0,ya,level);
+			return ;	//if I dont return the will be moving slowly
+		}
+		
+		if(xa >0) dir=1; // east
+		if(xa <0) dir=3; // west
+		if(ya > 0) dir =2;//south
+		if(ya <0) dir =0; //north
+		
+		if(!collision(xa,ya,level)) {
+			x += xa;
+			y += ya;
+		}
+		spawn.update(x,y);	
 	}
 	
-	protected boolean collision(int xa, int ya,Level level) {	
+	public boolean collision(int xa, int ya,Level level) {	
 		for(int c=0 ; c<4 ; c++) {	
 			//-16 ΠΑΡΑΔΟΧΗ for player to be rendered in the middle of the screen, because to be pretty I have to render +1 tile in width
 			// and +1 in height
@@ -53,15 +63,7 @@ public abstract class Entity extends Renderables implements Serializable {
 	}
 	
 	public void render(Screen screen) {
-		screen.renderPlayer(x-16, y-16, sprite);
-	}
-
-	public int getX() {
-		return x;
-	}
-
-	public int getY() {
-		return y;
+		screen.renderPlayer(spawn.getX()-16, spawn.getY()-16, sprite);
 	}
 	
 	public Coordinates getCoordinates() {
@@ -70,6 +72,10 @@ public abstract class Entity extends Renderables implements Serializable {
 	
 	public boolean isAlive() {
 		return hp>0;
+	}
+	
+	public void damage(Entity temp) {
+		temp.hp -= this.attack;
 	}
 	
 

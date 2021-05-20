@@ -1,8 +1,12 @@
 package champions;
 
+import java.awt.event.KeyEvent;
+
 import com.game.catchyname.graphics.Sprite;
 
 import domain.Champion;
+import domain.GameData;
+import domain.Level;
 import utilities.Coordinates;
 
 public class Assassin extends Champion{
@@ -15,4 +19,9 @@ public class Assassin extends Champion{
 		super(playerSpawn,sprite);
 	}
 
+	public void update(Level level,boolean[] keyCode,GameData data) {
+		super.update(level, keyCode, data);
+		if(keyCode[KeyEvent.VK_C]);
+		if(keyCode[KeyEvent.VK_V]);
+	}
 }

@@ -1,7 +1,7 @@
 package domain.lists;
 
 import java.io.Serializable;
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.Random;
 
 import com.game.catchyname.graphics.Screen;
@@ -16,40 +16,45 @@ public class MobList implements Serializable{
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private HashMap<Coordinates,Mob> mobs;
+	private ArrayList<Mob> mobs;
 	private Random random;
 	
 	public MobList(Level level) {
-		mobs = new HashMap<Coordinates,Mob>();
+		mobs = new ArrayList<Mob>();
 		
 		random = new Random();
-		int mobCounter = random.nextInt(10);
-		int xLimit = random.nextInt(10); 
-		int yLimit = random.nextInt(10); 
-		int hitbox = 50;
+		int mobCounter = random.nextInt(10000);
+		int hitbox = 5;
+		
 		for(int i=0;i<mobCounter;i++) {
-			//if(!level.getTile(xLimit,yLimit).solid()) {
-			   Coordinates temp = new Coordinates(xLimit,yLimit,hitbox,level.getId());
-			   mobs.put(temp, new Mob(temp,Sprite.testingSprite));
-			//}
+			int xLimit = random.nextInt(100); 
+		    int yLimit = random.nextInt(100); 
+			Coordinates temp = new Coordinates(xLimit,yLimit,hitbox);
+			mobs.add(new Mob(temp,Sprite.testingSprite));
 		}
 	}
 	
 	public void render(Screen screen,ItemList allItems) {
-		for(Coordinates coordinates:mobs.keySet()) {
-			Mob temp = mobs.get(coordinates);
-			if(temp.isAlive()) {
-				temp.render(screen);
-			}else {
-				allItems.putItem(temp.getCoordinates(),temp.getItem());
-				temp.removeItem();
-				mobs.remove(coordinates, temp);
-			}
+		ArrayList<Mob> temps = new ArrayList<Mob>();
+		for(Mob temp:mobs) {
+				if(temp.isAlive()) {
+			       temp.render(screen);
+		        }else {
+			       allItems.addItem(temp.getItem());
+			       temp.removeItem();
+			       temps.add(temp);
+			    }
 	    }
+		mobs.removeAll(temps);
 	}
-	
+
 	public Mob getMob(Coordinates coordinates) {
-		return mobs.get(coordinates);
+		for(Mob mob:mobs) {
+			if(mob.isInLocation(coordinates)) {
+				return mob;
+			}
+		}
+		return null;
 	}
 
 }

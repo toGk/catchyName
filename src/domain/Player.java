@@ -19,9 +19,9 @@ public class Player implements Serializable{
 	public Champion getChampion() {
 		return champion;
 	}
-	
-	public String getName() {
-		return name;
+
+	public void printData() {
+		System.out.print(name);
 	}
 
 }

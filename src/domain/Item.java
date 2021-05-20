@@ -14,9 +14,8 @@ public class Item extends Renderables implements Serializable{
 	 */
 	private static final long serialVersionUID = 1L;	
 
-	public Item(Coordinates coordinates, Sprite testingSprite) {
-		this.spawn = coordinates;
-		this.sprite = testingSprite;
+	public Item(Coordinates coordinates, Sprite sprite) {
+		super(coordinates,sprite);
 	}
 
 	@Override
@@ -24,4 +23,8 @@ public class Item extends Renderables implements Serializable{
 		screen.renderPlayer(spawn.getX()-16, spawn.getY()-16, sprite);
 	}
 
+	@Override
+	public Coordinates getCoordinates() {
+		return spawn;
+	}
 }
