@@ -20,11 +20,11 @@ public class Item extends Renderables implements Serializable{
 
 	@Override
 	public void render(Screen screen) {
-		screen.renderPlayer(spawn.getX()-16, spawn.getY()-16, sprite);
+		screen.renderPlayer(coordinates.getX()-16, coordinates.getY()-16, sprite);
 	}
 
 	@Override
 	public Coordinates getCoordinates() {
-		return spawn;
+		return coordinates;
 	}
 }

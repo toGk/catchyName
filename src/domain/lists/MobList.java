@@ -7,6 +7,7 @@ import java.util.Random;
 import com.game.catchyname.graphics.Screen;
 import com.game.catchyname.graphics.Sprite;
 
+import domain.GameData;
 import domain.Level;
 import domain.Mob;
 import utilities.Coordinates;
@@ -28,15 +29,19 @@ public class MobList implements Serializable{
 		
 		for(int i=0;i<mobCounter;i++) {
 			int xLimit = random.nextInt(100); 
-		    int yLimit = random.nextInt(100); 
-			Coordinates temp = new Coordinates(xLimit,yLimit,hitbox);
-			mobs.add(new Mob(temp,Sprite.testingSprite));
+		    int yLimit = random.nextInt(100);
+		    if(!level.getTile(xLimit, yLimit).solid()) {
+		    	Coordinates temp = new Coordinates(xLimit,yLimit,hitbox);
+			     mobs.add(new Mob(temp,Sprite.testingSprite));
+		    }
+			
 		}
 	}
 	
 	public void render(Screen screen,ItemList allItems) {
 		ArrayList<Mob> temps = new ArrayList<Mob>();
 		for(Mob temp:mobs) {
+			if(temp!=null&&mobs!=null) {
 				if(temp.isAlive()) {
 			       temp.render(screen);
 		        }else {
@@ -44,17 +49,28 @@ public class MobList implements Serializable{
 			       temp.removeItem();
 			       temps.add(temp);
 			    }
+			}
 	    }
 		mobs.removeAll(temps);
 	}
 
 	public Mob getMob(Coordinates coordinates) {
+		Mob temp;
 		for(Mob mob:mobs) {
-			if(mob.isInLocation(coordinates)) {
-				return mob;
+			if(mobs!=null&&mob!=null) {
+			   if(mob.isInLocation(coordinates)) {
+				   temp =mob;
+				   return temp;
+			    }
 			}
 		}
 		return null;
+	}
+
+	public void update(Level level, boolean[] keyCode, GameData gameData) {
+		for(Mob mob:mobs) {
+			mob.update(level,keyCode,gameData);
+		}
 	}
 
 }

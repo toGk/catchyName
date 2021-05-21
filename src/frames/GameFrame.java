@@ -59,8 +59,9 @@ public class GameFrame extends JPanel implements Runnable{
 	public GameFrame(GameDataList datalist, String name) {
 		this.datalist = datalist;
 		this.gamedata = datalist.getData(name);
-		
 		screen = new Screen(width, height);
+		gamedata.setScreen(screen);
+
 
 		paused = false;
 
@@ -73,6 +74,7 @@ public class GameFrame extends JPanel implements Runnable{
 		
 		pauseButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e){
+            	//TODO:PAUSEFRAME
 				if(paused==false) {
 					pauseButton.setText("Resume");
 				}else {
@@ -123,7 +125,7 @@ public class GameFrame extends JPanel implements Runnable{
 		int frames = 0;
 		int updates = 0;
 		while (running) {
-			if(paused==false) {
+			if(paused==false&&gamedata.gameIsOn()) {
 			long now = System.nanoTime();
 			delta += (now - lastTime)/nanoConversion; //millis 
 			lastTime = now;
@@ -132,18 +134,20 @@ public class GameFrame extends JPanel implements Runnable{
 				if(key.keycodes[KeyEvent.VK_F1]) {
 					saveGame();
 				}
-				gamedata.update(key.keycodes);			
+                gamedata.update(key.keycodes);	
 				delta--; 
 				updates++;
 			}
 			frames++;
-			repaint();
+		    repaint();
 			if(System.currentTimeMillis()  - timer > 1000) {//1sec = 1000 millis
 				timer+= 1000;// to display other than the first time correctly the FPS AND UPDATES			
 				frame.setTitle("Game" +"|" +updates+" UPS |"+frames+" FPS");
 				frames=0;
 				updates=0;
 			}
+		  }else {
+			  //TODO:endFrame
 		  }
 		}
 		stop();
@@ -151,7 +155,7 @@ public class GameFrame extends JPanel implements Runnable{
 
 	public void paintComponent(Graphics g) {
 		screen.clear();
-		gamedata.render(screen);	
+		gamedata.render();	
 		for(int i=0;i<pixels.length;i++) {
 			pixels[i] = screen.pixels[i];
 		}

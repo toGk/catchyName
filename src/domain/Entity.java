@@ -1,5 +1,6 @@
 package domain;
 
+import java.awt.event.KeyEvent;
 import java.io.Serializable;
 
 import com.game.catchyname.graphics.Screen;
@@ -13,19 +14,21 @@ public abstract class Entity extends Renderables implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	//TODO:
+	protected AttackMove[] attackmoves = new AttackMove[15];
 	
 	protected int x,y;
 	
-	protected int dir; //east,west....
-	protected boolean moving = false;
-	
-	protected int hp = 10;
+	protected int hp = 1000;
 	protected int attack = 2;
 
 	public Entity(Coordinates spawn,Sprite sprite) {
 		super(spawn,sprite);
 		x = spawn.getX();
 		y = spawn.getY();
+		for(int i=0;i<attackmoves.length;i++) {
+			attackmoves[i] = new AttackMove(new Coordinates(x/16,y/16,5),sprite);
+		}
 	}	
 	
 	protected void move(int xa , int ya,Level level) {
@@ -35,16 +38,12 @@ public abstract class Entity extends Renderables implements Serializable {
 			return ;	//if I dont return the will be moving slowly
 		}
 		
-		if(xa >0) dir=1; // east
-		if(xa <0) dir=3; // west
-		if(ya > 0) dir =2;//south
-		if(ya <0) dir =0; //north
-		
 		if(!collision(xa,ya,level)) {
 			x += xa;
 			y += ya;
 		}
-		spawn.update(x,y);	
+		coordinates.update(x,y);
+		updateAttacks(attackmoves);
 	}
 	
 	public boolean collision(int xa, int ya,Level level) {	
@@ -63,11 +62,11 @@ public abstract class Entity extends Renderables implements Serializable {
 	}
 	
 	public void render(Screen screen) {
-		screen.renderPlayer(spawn.getX()-16, spawn.getY()-16, sprite);
+		screen.renderPlayer(coordinates.getX()-16, coordinates.getY()-16, sprite);
 	}
 	
 	public Coordinates getCoordinates() {
-		return spawn;
+		return coordinates;
 	}
 	
 	public boolean isAlive() {
@@ -77,7 +76,25 @@ public abstract class Entity extends Renderables implements Serializable {
 	public void damage(Entity temp) {
 		temp.hp -= this.attack;
 	}
+	//TODO:
+	public void updateAttacks(AttackMove[] attacks) {
+		for(int i=0;i<attackmoves.length;i++) {
+		     attackmoves[i].coordinates.update(x, y);
+		}
+	}
 	
-
-
+	public void setDirection(AttackMove[] attacks,int dir) {
+		for(int i=0;i<attackmoves.length;i++) {
+		     attackmoves[i].setDirection(dir);
+		}
+	}
+	
+	public void update(Level level, boolean[] keyCode, GameData gameData) {
+        if(keyCode[KeyEvent.VK_A])setDirection(attackmoves,0);
+        if(keyCode[KeyEvent.VK_W])setDirection(attackmoves,1);
+        if(keyCode[KeyEvent.VK_D])setDirection(attackmoves,2);
+        if(keyCode[KeyEvent.VK_S])setDirection(attackmoves,3);
+    }
+	
+	
 }

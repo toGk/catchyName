@@ -56,7 +56,7 @@ public class MainFrame extends JFrame{
     			datalist.saveGame();
             }
         });
-		
+
 		this.getContentPane().add(panel);
 		
 		this.setVisible(true);

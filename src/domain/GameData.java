@@ -1,6 +1,5 @@
 package domain;
 
-import java.awt.event.KeyEvent;
 import java.io.Serializable;
 
 import com.game.catchyname.graphics.Screen;
@@ -18,6 +17,7 @@ public final class GameData implements Serializable{
 	private Level level;
 	private MobList allmobs;
 	private ItemList allItems;
+	private Screen screen;
 	
 	public GameData(Player player,String levelid) {
 		this.player = player;
@@ -31,24 +31,20 @@ public final class GameData implements Serializable{
 		player.printData();
 	}
 
-	private void pickItem() {
-		Item temp = allItems.getItem(champion.getCoordinates());
-		if(temp!=null) {
-			champion.pickItem(temp);
-		    allItems.remove(temp);
-		}
-	}
-
-	public void render(Screen screen) {
+	public void render() {
 		level.render(champion.getCoordinates().getX() - screen.getWidth() /2,champion.getCoordinates().getY() - screen.getHeight() /2, screen);
 		allmobs.render(screen, allItems);
 		allItems.render(screen);
 		champion.render(screen);
 	}
+	
+	public void render(Level level){
+		level.render(champion.getCoordinates().getX() - screen.getWidth() /2,champion.getCoordinates().getY() - screen.getHeight() /2, screen);
+	}
 
 	public void update(boolean[] keyCode) {
-		if(keyCode[KeyEvent.VK_F2])pickItem();
 	    champion.update(level,keyCode,this);
+	    allmobs.update(level,keyCode,this);
 	}
 
 	public MobList getAllmobs() {
@@ -57,5 +53,21 @@ public final class GameData implements Serializable{
 
 	public Level getLevel() {
 		return level;
+	}
+
+	public void setScreen(Screen screen) {
+		this.screen = screen;	
+	}
+	
+	public Screen getScreen() {
+		return screen;
+	}
+
+	public ItemList getAllItems() {
+		return allItems;
+	}
+
+	public boolean gameIsOn() {
+		return champion.isAlive();
 	}
 }

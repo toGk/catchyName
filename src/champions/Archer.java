@@ -23,7 +23,7 @@ public class Archer extends Champion{
 	public void update(Level level,boolean[] keyCode,GameData data) {
 		super.update(level, keyCode, data);
 		if(keyCode[KeyEvent.VK_C])this.lightAttack(data);
-		if(keyCode[KeyEvent.VK_V])test();
+		if(keyCode[KeyEvent.VK_V])test(data);
 	}
 	
 	protected void lightAttack(GameData data) {
@@ -32,8 +32,14 @@ public class Archer extends Champion{
 			super.damage(temp);
 		}
 	}
-
-	public void test() {
+//TODO:
+	public void test(GameData data) {
 		System.out.println("success");
+		int distance_traveled=0;
+		int i=0;
+		while(distance_traveled<=60) {
+			attackmoves[i].shoot(this,distance_traveled+=10,data);
+		    i++;
+		}
 	}
 }

@@ -14,11 +14,11 @@ public abstract class Renderables implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	protected Sprite sprite;
-	protected Coordinates spawn;
+	protected Coordinates coordinates;
 	
 	public Renderables(Coordinates spawn, Sprite sprite) {
 		this.sprite = sprite;
-		this.spawn = spawn;
+		this.coordinates = spawn;
 	}
 
 	public abstract void render(Screen screen);
@@ -26,6 +26,6 @@ public abstract class Renderables implements Serializable{
 	public abstract Coordinates getCoordinates();
 	
 	public boolean isInLocation(Coordinates coordinates) {
-		return this.spawn.equals(coordinates);
+		return this.coordinates.equals(coordinates);
 	}
 }

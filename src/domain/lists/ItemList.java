@@ -23,14 +23,16 @@ public class ItemList implements Serializable{
 		items = new ArrayList<Item>();
 		
 		random = new Random();
-		int itemCounter = random.nextInt(1000);
+		int itemCounter = random.nextInt(100);
 		int hitbox = 5;
 
 		for(int i=0;i<itemCounter;i++) {
 			int xLimit = random.nextInt(100); 
-		    int yLimit = random.nextInt(100); 
-			Coordinates temp = new Coordinates(xLimit,yLimit,hitbox);
-			items.add(new Item(temp,Sprite.testingSprite));
+		    int yLimit = random.nextInt(100);
+		    if(!level.getTile(xLimit, yLimit).solid()) {
+			    Coordinates temp = new Coordinates(xLimit,yLimit,hitbox);
+			    items.add(new Item(temp,Sprite.testingSprite));
+		    }
 		}
 	}
 	
@@ -40,7 +42,7 @@ public class ItemList implements Serializable{
 	
 	public Item getItem(Coordinates coordinates){
 		for(Item item:items) {
-			if(item!=null) {
+			if(item!=null&&items!=null) {
 				if(item.isInLocation(coordinates)) {
 				    return item;
 			    }
@@ -51,7 +53,7 @@ public class ItemList implements Serializable{
 
 	public void render(Screen screen) {
 		for(Item item:items) {
-			if(item!=null) {
+			if(item!=null&&items!=null) {
 			   item.render(screen);
 			}
 	    }

@@ -1,11 +1,16 @@
 package com.game.catchyname.graphics;
 
+import java.io.Serializable;
 import java.util.Random;
 
 import com.game.catchyname.level.tile.SpawnLevel.Tile;
 
-public class Screen {
+public class Screen implements Serializable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	public final int MAP_SIZE = 8;
 	public final int MAP_SIZE_MASK = MAP_SIZE -1;
 	private final int TILES=64;
