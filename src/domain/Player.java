@@ -23,7 +23,7 @@ public class Player implements Serializable{
 	}
 
 	public void printData() {
-		System.out.print(name + " - " + score);
+		System.out.println(name + " --- " + score);
 	}
 
 	public void addPoints(int points) {

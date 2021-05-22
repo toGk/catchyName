@@ -46,17 +46,14 @@ public class Mob extends Entity implements Comparable<Mob>{
 		if(!collision(xa,ya,level)) {
 			x += xa;
 			y += ya;
-		}else {
-			x -= xa*xa;
-			y -= ya*ya;
 		}
 		coordinates.update(x,y);
 	}
 
 	@Override
 	public int compareTo(Mob o) {
-		double distance_this_target = Math.pow(this.coordinates.getX()-target.getX(),2) + Math.pow(this.coordinates.getY()-target.getY(),2);
-		double distance_temp_target = Math.pow(o.coordinates.getX()-target.getX(),2) + Math.pow(o.coordinates.getY()-target.getY(),2);
+		double distance_this_target = Math.sqrt(Math.pow(this.coordinates.getX()-target.getX(),2) + Math.pow(this.coordinates.getY()-target.getY(),2));
+		double distance_temp_target = Math.sqrt(Math.pow(o.coordinates.getX()-target.getX(),2) + Math.pow(o.coordinates.getY()-target.getY(),2));
 		if(distance_this_target>distance_temp_target) {
 			return 1;
 		}else if(distance_this_target==distance_temp_target) {

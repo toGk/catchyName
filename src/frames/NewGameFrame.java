@@ -52,7 +52,6 @@ public class NewGameFrame extends JFrame{
 	    mage = new JButton("Mage");
 	    name = new JTextField("Please enter your name");
 	    back = new JButton("back");
-	    result = new JTextArea();
 	    
 	    result = new JTextArea();
 	    result.setEditable(false);

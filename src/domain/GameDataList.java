@@ -56,4 +56,11 @@ public final class GameDataList implements Serializable{
 		return null;
 	}
 
+	public void printData() {
+		System.out.println("Player's Name ||| score!!!");
+		for(String key: data.keySet()) {
+			data.get(key).getPlayer().printData();
+		}
+	}
+
 }

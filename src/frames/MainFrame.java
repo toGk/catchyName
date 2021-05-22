@@ -21,6 +21,7 @@ public class MainFrame extends JFrame{
 	private JButton newGame;
 	private JButton loadGame;
 	private JButton clearAllData;
+	private JButton scoreboard;
 	private GameDataList datalist;
 	
 	public MainFrame() {
@@ -31,11 +32,13 @@ public class MainFrame extends JFrame{
 	    panel= new JPanel();
 	    newGame = new JButton("New Game");
 	    loadGame = new JButton("Load Game");
+	    scoreboard = new JButton("Score Board");
 	    clearAllData = new JButton("Clear All Data");
 	    
 	    
 	    panel.add(newGame);
 	    panel.add(loadGame);
+	    panel.add(scoreboard);
 	    panel.add(clearAllData);
 	    
 	    newGame.addActionListener(new ActionListener() {
@@ -47,6 +50,12 @@ public class MainFrame extends JFrame{
 	    loadGame.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e){
     			new LoadFrame(datalist);
+    			dispose();
+            }
+        });
+	    scoreboard.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e){
+    			new ScoreBoardFrame(datalist);
     			dispose();
             }
         });
