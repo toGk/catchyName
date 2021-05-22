@@ -10,10 +10,12 @@ public class Player implements Serializable{
 	private static final long serialVersionUID = 1L;
 	private Champion champion;
 	private String name;
+	private int score;
 	
 	public Player(String name,Champion champion) {
 		this.champion = champion;
 		this.name = name;
+		score=0;
 	}
 
 	public Champion getChampion() {
@@ -21,7 +23,11 @@ public class Player implements Serializable{
 	}
 
 	public void printData() {
-		System.out.print(name);
+		System.out.print(name + " - " + score);
+	}
+
+	public void addPoints(int points) {
+		score+=points;
 	}
 
 }

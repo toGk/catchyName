@@ -25,7 +25,7 @@ public class AttackMove extends Renderables{
 	public Coordinates getCoordinates() {
 		return this.coordinates;
 	}
-	
+	//TODO:
 	public void shoot(Champion champ,int location,GameData data) {
 		int xa=location;
 		int ya=location;
@@ -44,6 +44,7 @@ public class AttackMove extends Renderables{
 			  break;
 		 }   
 		 render(data.getScreen());
+		 data.getAllmobs().sort();
 	     Mob temp = data.getAllmobs().getMob(this.coordinates);
 	     if(temp!=null) {
 		    champ.damage(temp);

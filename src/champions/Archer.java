@@ -18,6 +18,7 @@ public class Archer extends Champion{
 
 	public Archer(Coordinates playerSpawn,Sprite sprite) {
 		super(playerSpawn,sprite);
+		createProjectiles(Sprite.testingSprite);
 	}
 		
 	public void update(Level level,boolean[] keyCode,GameData data) {
@@ -25,7 +26,7 @@ public class Archer extends Champion{
 		if(keyCode[KeyEvent.VK_C])this.lightAttack(data);
 		if(keyCode[KeyEvent.VK_V])test(data);
 	}
-	
+
 	protected void lightAttack(GameData data) {
 		Mob temp = data.getAllmobs().getMob(this.getCoordinates());
 		if(temp!=null) {
@@ -34,6 +35,7 @@ public class Archer extends Champion{
 	}
 //TODO:
 	public void test(GameData data) {
+		
 		System.out.println("success");
 		int distance_traveled=0;
 		int i=0;

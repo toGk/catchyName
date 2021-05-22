@@ -14,7 +14,7 @@ public abstract class Entity extends Renderables implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	//TODO:
+
 	protected AttackMove[] attackmoves = new AttackMove[15];
 	
 	protected int x,y;
@@ -26,9 +26,6 @@ public abstract class Entity extends Renderables implements Serializable {
 		super(spawn,sprite);
 		x = spawn.getX();
 		y = spawn.getY();
-		for(int i=0;i<attackmoves.length;i++) {
-			attackmoves[i] = new AttackMove(new Coordinates(x/16,y/16,5),sprite);
-		}
 	}	
 	
 	protected void move(int xa , int ya,Level level) {
@@ -76,16 +73,22 @@ public abstract class Entity extends Renderables implements Serializable {
 	public void damage(Entity temp) {
 		temp.hp -= this.attack;
 	}
-	//TODO:
+	
+	public void createProjectiles(Sprite projectilesprite) {
+		for(int i=0;i<attackmoves.length;i++) {
+			attackmoves[i] = new AttackMove(new Coordinates(x/16,y/16,5),sprite);
+		}
+	}
+
 	public void updateAttacks(AttackMove[] attacks) {
 		for(int i=0;i<attackmoves.length;i++) {
-		     attackmoves[i].coordinates.update(x, y);
+		    attackmoves[i].coordinates.update(x, y);
 		}
 	}
 	
 	public void setDirection(AttackMove[] attacks,int dir) {
 		for(int i=0;i<attackmoves.length;i++) {
-		     attackmoves[i].setDirection(dir);
+		       attackmoves[i].setDirection(dir);
 		}
 	}
 	

@@ -23,7 +23,7 @@ public final class GameData implements Serializable{
 		this.player = player;
 		this.champion = player.getChampion();
 		level = new Level(levelid);
-		allmobs = new MobList(level);
+		allmobs = new MobList(level,champion.coordinates);
 		allItems = new ItemList(level);
 	}
 	
@@ -33,18 +33,18 @@ public final class GameData implements Serializable{
 
 	public void render() {
 		level.render(champion.getCoordinates().getX() - screen.getWidth() /2,champion.getCoordinates().getY() - screen.getHeight() /2, screen);
-		allmobs.render(screen, allItems);
+		allmobs.render(screen, allItems, player);
 		allItems.render(screen);
 		champion.render(screen);
-	}
-	
-	public void render(Level level){
-		level.render(champion.getCoordinates().getX() - screen.getWidth() /2,champion.getCoordinates().getY() - screen.getHeight() /2, screen);
 	}
 
 	public void update(boolean[] keyCode) {
 	    champion.update(level,keyCode,this);
 	    allmobs.update(level,keyCode,this);
+	}
+	
+	public Player getPlayer() {
+		return player;
 	}
 
 	public MobList getAllmobs() {

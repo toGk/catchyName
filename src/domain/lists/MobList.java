@@ -2,6 +2,7 @@ package domain.lists;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Random;
 
 import com.game.catchyname.graphics.Screen;
@@ -10,6 +11,7 @@ import com.game.catchyname.graphics.Sprite;
 import domain.GameData;
 import domain.Level;
 import domain.Mob;
+import domain.Player;
 import utilities.Coordinates;
 
 public class MobList implements Serializable{
@@ -20,7 +22,7 @@ public class MobList implements Serializable{
 	private ArrayList<Mob> mobs;
 	private Random random;
 	
-	public MobList(Level level) {
+	public MobList(Level level, Coordinates target) {
 		mobs = new ArrayList<Mob>();
 		
 		random = new Random();
@@ -30,21 +32,22 @@ public class MobList implements Serializable{
 		for(int i=0;i<mobCounter;i++) {
 			int xLimit = random.nextInt(100); 
 		    int yLimit = random.nextInt(100);
-		    if(!level.getTile(xLimit, yLimit).solid()) {
+		    if(level.getTile(xLimit, yLimit).solid()==false) {
 		    	Coordinates temp = new Coordinates(xLimit,yLimit,hitbox);
-			     mobs.add(new Mob(temp,Sprite.testingSprite));
+			     mobs.add(new Mob(temp,Sprite.testingSprite,target));
 		    }
 			
 		}
 	}
 	
-	public void render(Screen screen,ItemList allItems) {
+	public void render(Screen screen,ItemList allItems, Player player) {
 		ArrayList<Mob> temps = new ArrayList<Mob>();
 		for(Mob temp:mobs) {
 			if(temp!=null&&mobs!=null) {
 				if(temp.isAlive()) {
 			       temp.render(screen);
 		        }else {
+		           temp.givePoints(player);
 			       allItems.addItem(temp.getItem());
 			       temp.removeItem();
 			       temps.add(temp);
@@ -73,4 +76,7 @@ public class MobList implements Serializable{
 		}
 	}
 
+	public void sort() {
+		Collections.sort(mobs);
+	}
 }

@@ -40,12 +40,4 @@ public class Coordinates implements Serializable{
 		this.x = x2;
 		this.y = y2;
 	}
-
-	public boolean isFurtherThan(Coordinates coordinates, int distance) {
-		if(Math.pow(Math.abs(this.x- coordinates.x),2)+Math.pow(Math.abs(this.y- coordinates.y),2)>=Math.pow(distance, 2)) {
-			return true;
-		}else {
-			return false;
-		}
-	}
 }
